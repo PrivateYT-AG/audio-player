@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Audio Player</title>
+</head>
+<body>
+  <header>
+    <div class="dropdown-container">
+      <button type="button" class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Theme</button>
+      <ul class="dropdown-menu" role="menu">
+        <li><button type="button" role="menuitem" id="light-mode-btn">Light</button></li>
+        <li><button type="button" role="menuitem" id="dark-mode-btn">Dark</button></li>
+        <li><button type="button" role="menuitem" id="oled-dark-btn">OLED Dark</button></li>
+        <li><button type="button" role="menuitem" id="system-theme-btn">System</button></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="title">
+      <h1 class="title-text">Audio Player</h1>
+    </div>
+  
+    <!-- audio player -->
+    <div class="audio-player card">
+  
+      <label class="drop-zone">
+        Drop or select an audio file here (any format)
+        <input type="file" class="file" accept="audio/*">
+      </label>
+      
+      <span class="file-name">No file is dropped</span>
+      <audio src=""></audio>
+      <input type="range" class="range" id="progress" value="0" min="0" max="100">
+      <span id="duration">0:00 / 0:00</span>
+      <div class="audio-ctrls">
+        <button type="button" class="fixed-width-75" id="play">Play</button>
+        <label for="changePitch">Playback rate</label>
+        <input type="number" id="changePbRate" class="fixed-width-75" min="0.1" max="4" step="0.05" value="1">
+        <label for="changeVolume">Volume</label>
+        <input type="number" id="changeVolume" class="fixed-width-75" min="0" max="1" step="0.05" value="1">
+        <button type="button" id="openOptions">Options</button>
+      </div>
+  
+    </div>
+  
+    <div class="card settings">
+      <div class="label-container">
+        <label>Preserve pitch</label>
+        <input type="checkbox" class="checkbox" id="preservePitch" checked>
+      </div>
+    </div>
+  
+    <div class="error-container">
+      <div class="msg-error"></div>
+    </div>
+  </main>
+  <script src="main.js"></script>
+  <script src="https://privateyt-ag.github.io/privateyt-ui/script.js"></script>
+</body>
+</html>

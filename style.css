@@ -1,0 +1,107 @@
+@import url("https://privateyt-ag.github.io/privateyt-ui/style.css");
+
+main {
+  position: relative;
+}
+input[type=file] {
+  cursor: pointer;
+  display: none;
+}
+.drop-zone {
+  cursor: pointer;
+  border: var(--borders);
+  background-color: var(--bg-color-primary);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.audio-player, .settings {
+  width: 32rem;
+  margin: 1rem auto;
+  z-index: 5;
+  position: inherit;
+  box-shadow: 0 4px 8px #0000001a;
+  display: flex;
+  flex-direction: column;
+}
+.settings {
+  z-index: 1;
+  transform: translateY(-100px);
+  transition: transform 0.3s ease, visibility 0s linear 0.3s;
+  visibility: hidden;
+}
+.settings.show {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 0.3s ease, visibility 0s linear 0s;
+}
+.label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.audio-ctrls {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.error-container {
+  background-color: #ff808080;
+  border: 2px solid #ff8080;
+  max-width: 28rem;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem !important;
+  border-radius: 1.5rem;
+  display: none;
+}
+.dark-mode .error-container, .oled-dark .error-container {
+  background-color: #ff000040;
+  border: 2px solid #ff000080;
+}
+.error-container.show {
+  display: block;
+  animation: shake 0.2s ease;
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.title-text {
+  border-bottom: none;
+}
+.fixed-width-75 {
+  width: 75px;
+}
+#progress {
+  width: 100%;
+}
+@keyframes shake {
+  0%, 100% {transform: translate(0, 0);}
+  25% {transform: translateX(-4px);}
+  50% {transform: translateX(4px);}
+  75% {transform: translateX(-4px);}
+}
+@media (max-width: 599px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .audio-player, .settings {
+    width: 16rem;
+    display: block;
+  }
+  .drop-zone {
+    display: flex;
+    height: 6rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .audio-ctrls, .audio-ctrls button, .audio-ctrls input {
+    display: block;
+  }
+}
