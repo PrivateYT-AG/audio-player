@@ -18,7 +18,7 @@ input[type=file] {
   width: 100%;
   text-align: center;
 }
-.audio-player, .settings {
+.audio-player {
   width: 32rem;
   margin: 1rem auto;
   z-index: 5;
@@ -28,15 +28,19 @@ input[type=file] {
   flex-direction: column;
 }
 .settings {
+  width: 32rem;
+  margin: 1rem auto;
   z-index: 1;
   transform: translateY(-100px);
-  transition: transform 0.3s ease, visibility 0s linear 0.3s;
+  transition: transform 0.3s ease, visibility 0s linear 0.3s, box-shadow 0.3s ease;
+  box-shadow: none;
   visibility: hidden;
 }
 .settings.show {
   transform: translateY(0);
   visibility: visible;
-  transition: transform 0.3s ease, visibility 0s linear 0s;
+  box-shadow: 0 4px 8px #0000001a;
+  transition: transform 0.3s ease, visibility 0s linear 0s, box-shadow 0.3s ease;
 }
 .label-container {
   display: flex;
