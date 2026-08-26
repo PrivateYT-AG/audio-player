@@ -173,6 +173,10 @@ progressBar.addEventListener('input', () => {
   audio.currentTime = progressBar.value;
 });
 
+progressBar.addEventListener('keydown', (e) => {
+  e.preventDefault();
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     e.preventDefault();
