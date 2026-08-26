@@ -5,12 +5,14 @@ const durationSpan = document.getElementById('duration');
 const changePbRate = document.getElementById('changePbRate');
 const changeVolume = document.getElementById('changeVolume');
 const keepPitch = document.getElementById('preservePitch');
+const matchToPbRate = document.getElementById('matchToPbRate');
 const optionsBtn = document.getElementById('openOptions');
 const dropZone = document.querySelector('.drop-zone');
 const options = document.querySelector('.settings');
 const errorContainer = document.querySelector('.error-container');
 const filenameDisplay = document.querySelector('.file-name');
 const fileInput = document.querySelector('.file');
+let includePbRate = false;
 
 changePbRate.addEventListener('input', (e) => {
   changeAudioPbRate(e.target.value);
@@ -26,6 +28,11 @@ optionsBtn.addEventListener('click', () => {
 
 keepPitch.addEventListener('change', (e) => {
   audio.preservesPitch = e.target.checked;
+});
+
+matchToPbRate.addEventListener('change', (e) => {
+  includePbRate = e.target.checked;
+  updateTime();
 });
 
 dropZone.addEventListener('dragover', (e) => {
@@ -95,6 +102,7 @@ function changeAudioPbRate(pbRate) {
   }
   errorContainer.textContent = '';
   audio.playbackRate = parsedRate;
+  updateTime();
 }
 
 function changeAudioVolume(vol) {
@@ -144,8 +152,11 @@ function formatTime(time) {
 }
 
 function updateTime() {
-  const current = formatTime(audio.currentTime / audio.playbackRate);
-  const total = formatTime((audio.duration || 0) / audio.playbackRate);
+  const currentSecs = includePbRate ? (audio.currentTime / audio.playbackRate) : audio.currentTime;
+  const totalSecs = includePbRate ? ((audio.duration || 0) / audio.playbackRate) : (audio.duration || 0);
+
+  const current = formatTime(currentSecs);
+  const total = formatTime(totalSecs);
 
   durationSpan.textContent = `${current} / ${total}`;
 }
