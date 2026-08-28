@@ -110,15 +110,15 @@ function changeAudioVolume(vol) {
     errorContainer.classList.remove('show');
     return;
   }
-  const parsedVol = parseFloat(vol)
-  errorContainer.classList.remove('show')
+  const parsedVol = parseFloat(vol);
+  errorContainer.classList.remove('show');
   if (isNaN(parsedVol)) {
     errorContainer.classList.remove('show');
     return;
   }
   if (parsedVol < 0) {
     void errorContainer.offsetWidth;
-    errorContainer.classList.add('show')
+    errorContainer.classList.add('show');
     errorContainer.textContent = 'Volume cannot be below 0';
     return;
   }
@@ -133,6 +133,13 @@ function changeAudioVolume(vol) {
 }
 
 function togglePlay() {
+  if (!audio.src || audio.src === window.location.href) {
+    void errorContainer.offsetWidth;
+    errorContainer.classList.add('show');
+    errorContainer.textContent = 'Please select an audio file.';
+    return;
+  }
+
   if (audio.paused) {
     audio.play();
     playBtn.textContent = 'Pause';
@@ -140,6 +147,8 @@ function togglePlay() {
     audio.pause();
     playBtn.textContent = 'Play';
   }
+  errorContainer.classList.remove('show');
+  errorContainer.textContent = '';
 }
 
 playBtn.addEventListener('click', togglePlay);
@@ -161,10 +170,6 @@ function updateTime() {
   durationSpan.textContent = `${current} / ${total}`;
 }
 
-function roundAudioSkip(s) {
-  return Math.round(s / 5) * 5;
-}
-
 audio.addEventListener('loadedmetadata', updateTime);
 
 audio.addEventListener('timeupdate', updateTime);
@@ -175,7 +180,6 @@ audio.addEventListener('loadedmetadata', () => {
 
 audio.addEventListener('timeupdate', () => {
   if (!audio.duration) return;
-  const progress = (audio.currentTime / audio.duration) * 100;
   progressBar.value = audio.currentTime;
 });
 
@@ -193,8 +197,8 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     togglePlay();
   } else if (e.code === 'ArrowLeft') {
-    audio.currentTime = Math.max(roundAudioSkip(audio.currentTime - 5), 0);
+    audio.currentTime = Math.max((audio.currentTime - 5), 0);
   } else if (e.code === 'ArrowRight') {
-    audio.currentTime = Math.min(roundAudioSkip(audio.currentTime + 5), audio.duration);
+    audio.currentTime = Math.min((audio.currentTime + 5), audio.duration);
   }
 });
