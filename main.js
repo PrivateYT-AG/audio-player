@@ -4,6 +4,7 @@ const progressBar = document.getElementById('progress');
 const durationSpan = document.getElementById('duration');
 const changePbRate = document.getElementById('changePbRate');
 const changeVolume = document.getElementById('changeVolume');
+const enableLoop = document.getElementById('enableLoop');
 const keepPitch = document.getElementById('preservePitch');
 const matchToPbRate = document.getElementById('matchToPbRate');
 const optionsBtn = document.getElementById('openOptions');
@@ -24,6 +25,10 @@ changeVolume.addEventListener('input', (e) => {
 
 optionsBtn.addEventListener('click', () => {
   options.classList.toggle('show');
+});
+
+enableLoop.addEventListener('change', (e) => {
+  audio.loop = e.target.checked;
 });
 
 keepPitch.addEventListener('change', (e) => {
