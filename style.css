@@ -1,6 +1,7 @@
 @import url("https://privateyt-ag.github.io/privateyt-ui/style.css");
 
 main {
+  padding: 2rem 0;
   position: relative;
 }
 input[type=file] {
@@ -19,7 +20,7 @@ input[type=file] {
   text-align: center;
 }
 .audio-player {
-  width: 32rem;
+  max-width: 36rem;
   margin: 1rem auto;
   z-index: 5;
   position: inherit;
@@ -28,7 +29,7 @@ input[type=file] {
   flex-direction: column;
 }
 .settings {
-  width: 32rem;
+  max-width: 36rem;
   margin: 1rem auto;
   z-index: 1;
   transform: translateY(-100px);
