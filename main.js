@@ -194,7 +194,9 @@ progressBar.addEventListener('input', () => {
 });
 
 progressBar.addEventListener('keydown', (e) => {
-  e.preventDefault();
+  if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+    e.preventDefault();
+  }
 });
 
 document.addEventListener('keydown', (e) => {
