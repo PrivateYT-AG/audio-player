@@ -75,6 +75,7 @@ function handleAudio(file) {
     audio.src = fileURL;
     if (filenameDisplay) {
       filenameDisplay.textContent = file.name;
+      document.title = `Audio Player - ${file.name}`;
     }
   } else {
     errorContainer.classList.add('show');
