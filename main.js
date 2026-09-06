@@ -82,7 +82,7 @@ function handleAudio(file) {
     audio.src = fileURL;
     if (filenameDisplay) {
       filenameDisplay.textContent = file.name;
-      document.title = `Audio Player - ${file.name}`;
+      document.title = `${file.name} - Audio Player`;
     }
   } else {
     errorContainer.classList.add('show');
