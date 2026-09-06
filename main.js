@@ -202,8 +202,11 @@ progressBar.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
-    e.preventDefault();
-    togglePlay();
+    const isKeyboardClickable = e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON';
+    if (!isKeyboardClickable) {
+      e.preventDefault();
+      togglePlay();
+    }
   } else if (e.code === 'ArrowLeft') {
     audio.currentTime = Math.max((audio.currentTime - 5), 0);
   } else if (e.code === 'ArrowRight') {
