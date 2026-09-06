@@ -49,7 +49,8 @@ dropZone.addEventListener('click', () => {
 });
 
 dropZone.addEventListener('keydown', (e) => {
-  if (e.code === 'Enter' || e.code === 'Space') {
+  if (e.code === 'Enter') {
+    e.preventDefault();
     e.target.click();
   }
 });
@@ -208,7 +209,7 @@ progressBar.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
-    const isKeyboardClickable = e.target.matches('input, button, .drop-zone');
+    const isKeyboardClickable = e.target.matches('input[type=checkbox], button, .drop-zone');
     if (!isKeyboardClickable) {
       e.preventDefault();
       togglePlay();
