@@ -209,7 +209,7 @@ progressBar.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
-    const isKeyboardClickable = e.target.matches('input[type=checkbox], button, .drop-zone');
+    const isKeyboardClickable = e.target.matches('input[type=checkbox], button');
     if (!isKeyboardClickable) {
       e.preventDefault();
       togglePlay();
