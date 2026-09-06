@@ -48,6 +48,12 @@ dropZone.addEventListener('click', () => {
   fileInput.click();
 });
 
+dropZone.addEventListener('keydown', (e) => {
+  if (e.code === 'Enter' || e.code === 'Space') {
+    e.target.click();
+  }
+});
+
 dropZone.addEventListener('change', (e) => {
   const file = e.target.files[0];
   handleAudio(file);
@@ -202,7 +208,7 @@ progressBar.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
-    const isKeyboardClickable = e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON';
+    const isKeyboardClickable = e.target.matches('input, button, .drop-zone');
     if (!isKeyboardClickable) {
       e.preventDefault();
       togglePlay();
