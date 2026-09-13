@@ -152,13 +152,21 @@ function togglePlay() {
     errorContainer.textContent = 'Please select an audio file.';
     return;
   }
-
+  audio.addEventListener('play', () => {
+    playBtn.textContent = 'Pause';
+  });
+  
+  audio.addEventListener('pause', () => {
+    playBtn.textContent = 'Play';
+  });
+  
+  audio.addEventListener('ended', () => {
+    playBtn.textContent = 'Play';
+  });
   if (audio.paused) {
     audio.play();
-    playBtn.textContent = 'Pause';
   } else {
     audio.pause();
-    playBtn.textContent = 'Play';
   }
   errorContainer.classList.remove('show');
   errorContainer.textContent = '';
