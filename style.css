@@ -104,7 +104,9 @@ input[type=file] {
     overflow-x: hidden;
   }
   .audio-player, .settings {
-    width: 16rem;
+    border-radius: 0;
+    border-left: 0; border-right: 0;
+    width: 100%;
     display: block;
   }
   .drop-zone {
@@ -121,5 +123,8 @@ input[type=file] {
   }
   .fixed-width-200 {
     width: 100%;
+  }
+  .fixed-width-300 {
+    width: 150px;
   }
 }
