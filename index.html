@@ -24,8 +24,7 @@
     <div class="title">
       <h1 class="title-text">Audio Player</h1>
     </div>
-  
-    <!-- audio player -->
+
     <div class="audio-player card">
   
       <label class="drop-zone" tabindex="0" role="button">
@@ -39,10 +38,11 @@
       <span id="duration">0:00 / 0:00</span>
       <div class="audio-ctrls">
         <button type="button" class="fixed-width-75" id="play">Play</button>
-        <label for="changePitch">Playback rate</label>
-        <input type="number" id="changePbRate" class="fixed-width-75" min="0.1" max="4" step="0.05" value="1">
         <label for="changeVolume">Volume</label>
-        <input type="number" id="changeVolume" class="fixed-width-75" min="0" max="1" step="0.05" value="1">
+        <div class="label-container tooltip">
+          <input type="range" id="changeVolume" class="range fixed-width-200" step="0.05" min="0" max="1" value="1">
+          <span class="tooltip-text di-vol">100%</span>
+        </div>
         <label for="enableLoop">Loop</label>
         <input type="checkbox" id="enableLoop" class="checkbox">
         <button type="button" id="openOptions">Options</button>
@@ -51,13 +51,22 @@
     </div>
   
     <div class="card settings">
-      <div class="label-container" title="If checked, the pitch stays the same when sped up or slowed down.">
+      <div class="label-container">
+        <label>Playback rate</label>
+        <div class="tooltip">
+          <input type="range" id="changePbRate" class="range fixed-width-300" step="0.05" min="0.1" max="2" value="1">
+          <span class="tooltip-text di-pbrate">1.00x</span>
+        </div>
+      </div>
+      <div class="label-container tooltip">
         <label>Preserve pitch</label>
         <input type="checkbox" class="checkbox" id="preservePitch" checked>
+        <span class="tooltip-text bottom">If checked, the pitch stays the same when sped up or slowed down.</span>
       </div>
-      <div class="label-container" title="If checked, the displayed audio length changes when playback rate is changed.">
+      <div class="label-container tooltip">
         <label>Match time to playback rate</label>
         <input type="checkbox" class="checkbox" id="matchToPbRate">
+        <span class="tooltip-text bottom">If checked, the displayed audio length changes when playback rate is changed.</span>
       </div>
     </div>
   
