@@ -104,9 +104,7 @@ input[type=file] {
     overflow-x: hidden;
   }
   .audio-player, .settings {
-    border-radius: 0;
-    border-left: 0; border-right: 0;
-    width: 100%;
+    width: calc(100vw - 2rem);
     display: block;
   }
   .drop-zone {
@@ -118,13 +116,13 @@ input[type=file] {
   .audio-ctrls, .audio-ctrls button, .audio-ctrls input {
     display: block;
   }
-  .tooltip {
-    display: block;
-  }
   .fixed-width-200 {
     width: 100%;
   }
   .fixed-width-300 {
     width: 150px;
+  }
+  .tooltip-text {
+    max-width: calc(100vw - 2rem);
   }
 }
