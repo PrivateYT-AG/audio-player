@@ -2,25 +2,57 @@ const audio = document.querySelector('audio');
 const playBtn = document.getElementById('play');
 const progressBar = document.getElementById('progress');
 const durationSpan = document.getElementById('duration');
-const changePbRate = document.getElementById('changePbRate');
+const changeSpeed = document.getElementById('changePbRate');
 const changeVolume = document.getElementById('changeVolume');
 const enableLoop = document.getElementById('enableLoop');
 const keepPitch = document.getElementById('preservePitch');
-const matchToPbRate = document.getElementById('matchToPbRate');
+const matchToSpeed = document.getElementById('matchToPbRate');
 const optionsBtn = document.getElementById('openOptions');
 const dropZone = document.querySelector('.drop-zone');
 const options = document.querySelector('.settings');
 const errorContainer = document.querySelector('.error-container');
+const diVol = document.querySelector('.di-vol');
+const diSpeed = document.querySelector('.di-pbrate');
 const filenameDisplay = document.querySelector('.file-name');
 const fileInput = document.querySelector('.file');
-let includePbRate = false;
+const SPEED_VOLUME_CHANGE = '0.05';
+const SPEED_VOLUME_CHANGE_PRECISE = '0.01';
+let includeSpeed = false;
 
-changePbRate.addEventListener('input', (e) => {
-  changeAudioPbRate(e.target.value);
+changeSpeed.addEventListener('input', () => {
+  const value = parseFloat(changeSpeed.value);
+  audio.playbackRate = value;
+  diSpeed.textContent = `${value.toFixed(2)}x`;
 });
 
-changeVolume.addEventListener('input', (e) => {
-  changeAudioVolume(e.target.value);
+changeSpeed.addEventListener('keydown', (e) => {
+  if (e.shiftKey) {
+    changeSpeed.step = SPEED_VOLUME_CHANGE_PRECISE;
+  }
+});
+
+changeSpeed.addEventListener('keyup', (e) => {
+  if (!e.shiftKey) {
+    changeSpeed.step = SPEED_VOLUME_CHANGE;
+  }
+});
+
+changeVolume.addEventListener('input', () => {
+  const value = parseFloat(changeVolume.value);
+  audio.volume = value;
+  diVol.textContent = `${Math.round(value * 100)}%`;
+});
+
+changeVolume.addEventListener('keydown', (e) => {
+  if (e.shiftKey) {
+    changeVolume.step = SPEED_VOLUME_CHANGE_PRECISE;
+  }
+});
+
+changeVolume.addEventListener('keyup', (e) => {
+  if (!e.shiftKey) {
+    changeVolume.step = SPEED_VOLUME_CHANGE;
+  }
 });
 
 optionsBtn.addEventListener('click', () => {
@@ -35,8 +67,8 @@ keepPitch.addEventListener('change', (e) => {
   audio.preservesPitch = e.target.checked;
 });
 
-matchToPbRate.addEventListener('change', (e) => {
-  includePbRate = e.target.checked;
+matchToSpeed.addEventListener('change', (e) => {
+  includeSpeed = e.target.checked;
   updateTime();
 });
 
@@ -90,61 +122,6 @@ function handleAudio(file) {
   }
 }
 
-function changeAudioPbRate(pbRate) {
-  if (pbRate === '' || pbRate.endsWith('.')) {
-    errorContainer.classList.remove('show');
-    return; 
-  }
-  const parsedRate = parseFloat(pbRate);
-  errorContainer.classList.remove('show');
-  if (isNaN(parsedRate)) {
-    errorContainer.classList.remove('show');
-    return;
-  }
-  if (parsedRate < 0.1) {
-    void errorContainer.offsetWidth;
-    errorContainer.classList.add('show');
-    errorContainer.textContent = 'Too low. Minimum is 0.1';
-    return;
-  }
-  if (parsedRate > 4) {
-    void errorContainer.offsetWidth;
-    errorContainer.classList.add('show');
-    errorContainer.textContent = 'Too high. Maximum is 4';
-    return;
-  }
-  errorContainer.textContent = '';
-  audio.playbackRate = parsedRate;
-  updateTime();
-}
-
-function changeAudioVolume(vol) {
-  if (vol === '' || vol.endsWith('.')) {
-    errorContainer.classList.remove('show');
-    return;
-  }
-  const parsedVol = parseFloat(vol);
-  errorContainer.classList.remove('show');
-  if (isNaN(parsedVol)) {
-    errorContainer.classList.remove('show');
-    return;
-  }
-  if (parsedVol < 0) {
-    void errorContainer.offsetWidth;
-    errorContainer.classList.add('show');
-    errorContainer.textContent = 'Volume cannot be below 0';
-    return;
-  }
-  if (parsedVol > 1) {
-    void errorContainer.offsetWidth;
-    errorContainer.classList.add('show');
-    errorContainer.textContent = 'Volume cannot be above 1';
-    return;
-  }
-  errorContainer.textContent = '';
-  audio.volume = parsedVol;
-}
-
 function togglePlay() {
   if (!audio.src || audio.src === window.location.href) {
     void errorContainer.offsetWidth;
@@ -182,8 +159,8 @@ function formatTime(time) {
 }
 
 function updateTime() {
-  const currentSecs = includePbRate ? (audio.currentTime / audio.playbackRate) : audio.currentTime;
-  const totalSecs = includePbRate ? ((audio.duration || 0) / audio.playbackRate) : (audio.duration || 0);
+  const currentSecs = includeSpeed ? (audio.currentTime / audio.playbackRate) : audio.currentTime;
+  const totalSecs = includeSpeed ? ((audio.duration || 0) / audio.playbackRate) : (audio.duration || 0);
 
   const current = formatTime(currentSecs);
   const total = formatTime(totalSecs);
@@ -196,6 +173,7 @@ audio.addEventListener('loadedmetadata', updateTime);
 audio.addEventListener('timeupdate', updateTime);
 
 audio.addEventListener('loadedmetadata', () => {
+  audio.playbackRate = changeSpeed.value;
   progressBar.max = audio.duration;
 });
 
@@ -210,7 +188,7 @@ progressBar.addEventListener('input', () => {
 });
 
 progressBar.addEventListener('keydown', (e) => {
-  if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+  if (e.code === 'ArrowLeft' || e.code === 'ArrowRight' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
     e.preventDefault();
   }
 });
@@ -223,8 +201,8 @@ document.addEventListener('keydown', (e) => {
       togglePlay();
     }
   } else if (e.code === 'ArrowLeft') {
-    audio.currentTime = Math.max((audio.currentTime - 5), 0);
+    audio.currentTime = Math.max((audio.currentTime - 5 * audio.playbackRate), 0);
   } else if (e.code === 'ArrowRight') {
-    audio.currentTime = Math.min((audio.currentTime + 5), audio.duration);
+    audio.currentTime = Math.min((audio.currentTime + 5 * audio.playbackRate), audio.duration);
   }
 });
