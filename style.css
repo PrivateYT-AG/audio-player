@@ -32,7 +32,7 @@ input[type=file] {
   max-width: 36rem;
   margin: 1rem auto;
   z-index: 1;
-  transform: translateY(-100px);
+  transform: translateY(-128px);
   transition: transform 0.3s ease, visibility 0s linear 0.3s, box-shadow 0.3s ease;
   box-shadow: none;
   visibility: hidden;
@@ -47,6 +47,7 @@ input[type=file] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .audio-ctrls {
   margin-top: 0.5rem;
@@ -83,6 +84,12 @@ input[type=file] {
 .fixed-width-75 {
   width: 75px;
 }
+.fixed-width-200 {
+  width: 200px;
+}
+.fixed-width-300 {
+  width: 300px;
+}
 #progress {
   width: 100%;
 }
@@ -108,5 +115,11 @@ input[type=file] {
   }
   .audio-ctrls, .audio-ctrls button, .audio-ctrls input {
     display: block;
+  }
+  .tooltip {
+    display: block;
+  }
+  .fixed-width-200 {
+    width: 100%;
   }
 }
